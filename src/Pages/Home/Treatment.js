@@ -1,5 +1,6 @@
 import React from "react";
 import treatment from "../../assets/images/treatment.png";
+import MainButton from "../Shared/MainButton";
 
 const Treatment = () => {
   return (
@@ -22,9 +23,7 @@ const Treatment = () => {
             here', making it look like readable English. Many desktop publishing
             packages and web page
           </p>
-          <button className="btn btn-secondary font-bold text-white bg-gradient-to-r from-secondary to-primary">
-            Get Started
-          </button>
+          <MainButton>Get Started</MainButton>
         </div>
       </div>
     </div>

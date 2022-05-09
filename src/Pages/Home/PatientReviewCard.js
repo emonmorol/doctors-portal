@@ -6,8 +6,8 @@ const PatientReviewCard = ({ review }) => {
     <div className="shadow-lg px-8 py-10 rounded-2xl">
       <p>{reviewContext}</p>
       <div className="flex items-center mt-8">
-        <div class="avatar mr-6">
-          <div class="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+        <div className="avatar mr-6">
+          <div className="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
             <img src={image} alt="" />
           </div>
         </div>

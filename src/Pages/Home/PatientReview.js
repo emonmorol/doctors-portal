@@ -35,15 +35,15 @@ const PatientReview = () => {
 
   return (
     <section className="flex flex-col my-20">
-      <div className="flex justify-between items-center">
-        <div>
+      <div className="flex justify-between items-center my-20">
+        <div className=" lg:flex-1">
           <h2 className="text-secondary font-bold text-xl">Testimonial</h2>
           <h3 className="text-accent font-semibold text-4xl my-6">
             What Our Patients Says
           </h3>
         </div>
-        <div className="w-1/2 lg:w-full ">
-          <img className="w-full " src={quote} alt="" />
+        <div className="w-[100px] h-[80px] lg:w-[200px] lg:h-[160px] lg:flex-1 flex justify-end">
+          <img src={quote} alt="" />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-3 mx-3 lg:gap-14 md:grid-cols-2 lg:grid-cols-3 lg:mx-6">

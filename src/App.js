@@ -12,7 +12,7 @@ import Navbar from "./Pages/Shared/Navbar";
 function App() {
   return (
     <>
-      <div className="mx-auto">
+      <div className="mx-auto lg:px-12 px-2">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

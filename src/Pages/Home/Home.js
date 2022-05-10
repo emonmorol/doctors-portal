@@ -5,6 +5,7 @@ import Info from "./Info";
 import Service from "./Service";
 import Treatment from "./Treatment";
 import PatientReview from "./PatientReview";
+import StayConnected from "./StayConnected";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Treatment />
       <MakeAppointment />
       <PatientReview />
+      <StayConnected />
     </div>
   );
 };

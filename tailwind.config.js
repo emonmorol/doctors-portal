@@ -1,9 +1,9 @@
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js}", "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       backgroundImage: {
-        "doctor-banner": "url('/src/assets/images/chair.png')",
+        "doctor-banner": "url('/src/assets/images/bg.png')",
         "doctor-appointment": "url('/src/assets/images/appointment.png')",
         "doctor-footer": "url('/src/assets/images/footer.png')",
       },
@@ -24,5 +24,5 @@ module.exports = {
       "cupcake",
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("flowbite/plugin")],
 };

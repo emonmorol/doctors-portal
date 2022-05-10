@@ -1,16 +1,18 @@
 import React from "react";
-import doctor from "../../assets/images/doctor.png";
+import doctor from "../../assets/images/doctor-small.png";
 import MainButton from "../Shared/MainButton";
 
 const MakeAppointment = () => {
   return (
-    <section className="flex justify-center items-center bg-doctor-appointment my-24">
-      <div className="flex-1 hidden lg:block">
+    <section className="relative flex justify-end items-center bg-doctor-appointment my-44 p-5 lg:p-20">
+      <div className="absolute left-0 bottom-0 flex-1 hidden lg:block">
         <img className="mt-[-225px]" src={doctor} alt="" />
       </div>
-      <div className="flex-1 p-6 lg:p-0">
-        <h2 className="text-secondary font-bold text-xl">Appointment</h2>
-        <h3 className="text-white font-semibold text-4xl my-6">
+      <div className="w-1/2 lg:ml-[50%] flex-1 p- lg:p-6">
+        <h2 className="text-secondary font-bold text-base lg:text-xl">
+          Appointment
+        </h2>
+        <h3 className="text-white font-semibold text-2xl lg:text-4xl my-6">
           Make An Appointment Today
         </h3>
         <p className="text-base lg:w-[65ch] text-gray-200 mb-6">

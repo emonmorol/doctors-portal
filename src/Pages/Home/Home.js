@@ -6,10 +6,11 @@ import Service from "./Service";
 import Treatment from "./Treatment";
 import PatientReview from "./PatientReview";
 import StayConnected from "./StayConnected";
+import Footer from "../Shared/Footer";
 
 const Home = () => {
   return (
-    <div className=" relative px-2 lg:px-12">
+    <div className="relative lg:px-12 px-2">
       <Banner />
       <Info />
       <Service />
@@ -17,6 +18,7 @@ const Home = () => {
       <MakeAppointment />
       <PatientReview />
       <StayConnected />
+      <Footer />
     </div>
   );
 };

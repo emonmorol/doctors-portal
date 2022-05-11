@@ -10,7 +10,7 @@ import Footer from "../Shared/Footer";
 
 const Home = () => {
   return (
-    <div className="relative lg:px-12 px-2">
+    <div className="relative">
       <Banner />
       <Info />
       <Service />

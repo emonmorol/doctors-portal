@@ -1,3 +1,4 @@
+import axios from "axios";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import BookingModal from "./BookingModal";
@@ -6,7 +7,6 @@ import ServiceCard from "./ServiceCard";
 const AvailableAppointment = ({ date }) => {
   const [services, setServices] = useState([]);
   const [treatment, setTreatment] = useState({});
-  console.log(treatment);
 
   useEffect(() => {
     fetch("http://localhost:5000/services")
@@ -29,7 +29,7 @@ const AvailableAppointment = ({ date }) => {
           />
         ))}
       </div>
-      {treatment !== {} && (
+      {treatment && (
         <BookingModal
           treatment={treatment}
           date={date}

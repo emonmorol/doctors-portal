@@ -1,3 +1,4 @@
+import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
 
@@ -8,7 +9,24 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.slot.value;
-    console.log(slot);
+    const patientName = e.target.name.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
+
+    const newBooking = {
+      bookingName: name,
+      slot,
+      patientName,
+      email,
+      phone,
+    };
+
+    const url = `http://localhost:5000/bookings`;
+    (async () => {
+      const { data } = await axios.post(url, newBooking);
+      console.log(data);
+    })();
+
     setTreatment(null);
   };
 
@@ -32,9 +50,8 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
               className="input input-bordered w-full"
             />
             <select name="slot" className="select select-bordered w-full">
-              {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
-              ))}
+              {slots &&
+                slots.map((slot) => <option value={slot}>{slot}</option>)}
             </select>
             <input
               type="text"

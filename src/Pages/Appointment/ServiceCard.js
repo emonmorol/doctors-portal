@@ -19,7 +19,9 @@ const ServiceCard = ({ service, setTreatment }) => {
         <div class="card-actions  justify-center">
           <label
             disabled={slots.length === 0}
-            onClick={() => setTreatment(service)}
+            onClick={() => {
+              setTreatment(service);
+            }}
             for="booking-modal"
             class="w-full btn btn-secondary font-bold text-white bg-gradient-to-r from-secondary to-primary"
           >

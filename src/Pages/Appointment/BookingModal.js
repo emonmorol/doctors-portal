@@ -1,6 +1,7 @@
 import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
+import swal from "sweetalert";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots } = treatment;
@@ -24,7 +25,9 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     const url = `http://localhost:5000/bookings`;
     (async () => {
       const { data } = await axios.post(url, newBooking);
-      console.log(data);
+      if (data) {
+        swal("Great!", "You Booking is Complete!", "success");
+      }
     })();
 
     setTreatment(null);
@@ -44,6 +47,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
           <h3 className="font-bold text-lg mb-12">{name}</h3>
           <form onSubmit={handleBooking} className="grid grid-cols-1 gap-3">
             <input
+              required
               type="text"
               disabled
               value={format(date, "PP")}
@@ -54,18 +58,21 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                 slots.map((slot) => <option value={slot}>{slot}</option>)}
             </select>
             <input
+              required
               type="text"
               name="name"
               placeholder="Your Name"
               className="input input-bordered w-full"
             />
             <input
+              required
               type="email"
               name="email"
               placeholder="Email Address"
               className="input input-bordered w-full"
             />
             <input
+              required
               type="number"
               name="phone"
               placeholder="Phone Number"

@@ -1,21 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import login from "../../assets/images/login.png";
+import register from "../../assets/images/register.png";
 
-const Login = () => {
+const Register = () => {
   return (
     <div className="pt-14">
       <section class="h-screen">
         <div class="container px-6 py-12 rounded-2xl shadow-lg border mx-auto">
           <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-            <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
-              <img src={login} class="w-4/5" alt="" />
+            <div class="md:w-8/12 lg:w-6/12 pl-20 mb-12 md:mb-0">
+              <img src={register} class="w-4/5" alt="" />
             </div>
             <div class="w-11/12 md:w-8/12 lg:w-5/12 lg:ml-20 border p-5 lg:p-14 bg-gray-50 shadow rounded-3xl">
               <h2 className="font-bold text-3xl text-center uppercase mb-6 text-primary">
-                Please Login
+                Please Register
               </h2>
               <form>
+                <div class="mb-6">
+                  <label htmlFor="email">Your Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    placeholder="Your Name"
+                  />
+                </div>
                 <div class="mb-6">
                   <label htmlFor="email">Email Address</label>
                   <input
@@ -37,19 +46,20 @@ const Login = () => {
                 </div>
 
                 <div class="flex justify-between items-center mb-6">
-                  <Link
-                    to="/register"
-                    class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
-                  >
-                    Forgot password?
-                  </Link>
-                  <Link
-                    to="/register"
-                    class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
-                  >
-                    <i class="fa-solid fa-user-plus mr-2"></i> New To Doctors
-                    Portal ?
-                  </Link>
+                  <div class="form-group form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                      id="exampleCheck3"
+                      checked
+                    />
+                    <label
+                      class="form-check-label inline-block text-gray-800"
+                      for="exampleCheck2"
+                    >
+                      Agree to the terms and policy
+                    </label>
+                  </div>
                 </div>
 
                 <button
@@ -58,18 +68,18 @@ const Login = () => {
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
                 >
-                  Log in
+                  Register
                 </button>
 
-                {/* <div className="text-center">
+                <div className="text-center">
                   <Link
-                    to="/register"
+                    to="/login"
                     class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                   >
-                    <i class="fa-solid fa-user-plus mr-2"></i> New To Doctors
-                    Portal ?
+                    <i class="fa-solid fa-user-plus mr-2"></i> Already Have An
+                    Account ?
                   </Link>
-                </div> */}
+                </div>
 
                 <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                   <p class="text-center font-semibold mx-4 mb-0">OR</p>
@@ -106,4 +116,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

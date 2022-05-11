@@ -1,103 +1,161 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import login from "../../assets/images/login.png";
+import { useForm } from "react-hook-form";
+import Social from "./Social";
+import auth from "../../firebase.init";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import Loading from "../Shared/Loading";
 
 const Login = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    signInWithEmailAndPassword(data.email, data.password);
+  };
+  let errorMessage;
+  if (error) {
+    errorMessage = (
+      <p className="text-center text-red-600 mb-6">Error: {error?.message}</p>
+    );
+  }
+  if (loading) {
+    return <Loading />;
+  }
+  if (user) {
+    console.log(user);
+  }
+
   return (
     <div className="pt-14">
-      <section class="h-screen">
-        <div class="container px-6 py-12 rounded-2xl shadow-lg border mx-auto">
-          <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-            <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
-              <img src={login} class="w-4/5" alt="" />
+      <section className="h-screen">
+        <div className="w-full lg:px-6 lg:py-12 rounded-3xl shadow-lg border mx-auto">
+          <div className="flex justify-center items-center flex-wrap w-full h-full text-gray-800">
+            <div className="hidden lg:block md:w-8/12 lg:w-6/12 mb-12 pl-20 md:mb-0">
+              <img src={login} className=" w-3/5" alt="" />
             </div>
-            <div class="w-11/12 md:w-8/12 lg:w-5/12 lg:ml-20 border p-5 lg:p-14 bg-gray-50 shadow rounded-3xl">
+            <div className="w-full md:w-8/12 lg:w-5/12 lg:ml-20 border p-5 lg:p-14 bg-gray-50 shadow rounded-3xl">
               <h2 className="font-bold text-3xl text-center uppercase mb-6 text-primary">
                 Please Login
               </h2>
-              <form>
-                <div class="mb-6">
-                  <label htmlFor="email">Email Address</label>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div class="form-control w-full mb-6">
+                  <label class="label">
+                    <span class="label-text">Email Address</span>
+                  </label>
                   <input
                     type="email"
-                    name="email"
-                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    placeholder="Email address"
+                    placeholder="Enter Your Email"
+                    {...register("email", {
+                      required: {
+                        value: true,
+                        message: "Email Is required",
+                      },
+                      pattern: {
+                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                        message: "Provide A Valid Email",
+                      },
+                    })}
+                    class="input input-bordered w-full"
                   />
+                  <label class="text-center">
+                    {errors.email?.type === "required" && (
+                      <span class="label-text-alt text-red-500">
+                        {errors.email.message}
+                      </span>
+                    )}
+                    {errors.email?.type === "pattern" && (
+                      <span class="label-text-alt text-red-500">
+                        {errors.email.message}
+                      </span>
+                    )}
+                  </label>
                 </div>
 
-                <div class="mb-6">
-                  <label htmlFor="password">Password</label>
+                <div class="form-control w-full mb-6">
+                  <label class="label">
+                    <span class="label-text">Password</span>
+                  </label>
                   <input
                     type="password"
-                    name="password"
-                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-lg transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    placeholder="Password"
+                    placeholder="Enter Your Password"
+                    {...register("password", {
+                      required: {
+                        value: true,
+                        message: "Password Is required",
+                      },
+                      minLength: {
+                        value: 6,
+                        message: "Password must be 6 character of longer",
+                      },
+                    })}
+                    class="input input-bordered w-full"
                   />
+                  <label class="text-center">
+                    {errors.password?.type === "required" && (
+                      <span class="label-text-alt text-red-500">
+                        {errors.password.message}
+                      </span>
+                    )}
+                    {errors.password?.type === "minLength" && (
+                      <span class="label-text-alt text-red-500">
+                        {errors.password.message}
+                      </span>
+                    )}
+                  </label>
                 </div>
 
-                <div class="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-6">
                   <Link
                     to="/register"
-                    class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
+                    className="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                   >
                     Forgot password?
                   </Link>
                   <Link
                     to="/register"
-                    class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
+                    className="lg:block hidden font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                   >
-                    <i class="fa-solid fa-user-plus mr-2"></i> New To Doctors
-                    Portal ?
+                    <i className="fa-solid fa-user-plus mr-2"></i> New To
+                    Doctors Portal ?
                   </Link>
                 </div>
 
-                <button
+                {errorMessage}
+
+                <input
                   type="submit"
-                  class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full mb-6"
+                  value="Login"
+                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full mb-6"
+                />
+                {/* <button
+                  type="submit"
+                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full mb-6"
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
                 >
                   Log in
-                </button>
+                </button> */}
 
-                {/* <div className="text-center">
+                <div className="block lg:hidden text-center">
                   <Link
                     to="/register"
-                    class="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
+                    className="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                   >
-                    <i class="fa-solid fa-user-plus mr-2"></i> New To Doctors
-                    Portal ?
+                    <i className="fa-solid fa-user-plus mr-2"></i> New To
+                    Doctors Portal ?
                   </Link>
-                </div> */}
-
-                <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-                  <p class="text-center font-semibold mx-4 mb-0">OR</p>
                 </div>
-
-                <Link
-                  class="btn border-0 px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center mb-3"
-                  style={{ backgroundColor: "#3b5998" }}
-                  to="#!"
-                  role="button"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                >
-                  <i class="fa-brands fa-google mr-2"></i>
-                  Continue with Google
-                </Link>
-                <Link
-                  class="btn border-0 px-7 py-3 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full flex justify-center items-center"
-                  style={{ backgroundColor: "#55acee" }}
-                  to="#!"
-                  role="button"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                >
-                  <i class="fa-brands fa-facebook-f mr-2"></i>
-                  Continue with Facebook
-                </Link>
               </form>
+              <Social />
             </div>
           </div>
         </div>

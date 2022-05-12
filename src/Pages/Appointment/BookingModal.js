@@ -5,7 +5,7 @@ import swal from "sweetalert";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots } = treatment;
-  console.log(treatment, slots);
+  // console.log(treatment, slots);
 
   const handleBooking = (e) => {
     e.preventDefault();

@@ -3,14 +3,21 @@ import auth from "../../firebase.init";
 import {
   useSignInWithGoogle,
   useSignInWithGithub,
+  useAuthState,
 } from "react-firebase-hooks/auth";
 import Loading from "../Shared/Loading";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Social = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
   const [signInWithGithub, githubUser, githubLoading, githubError] =
     useSignInWithGithub(auth);
+  const [user, loading] = useAuthState(auth);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
   let firebaseError;
   if (googleError || githubError) {
@@ -25,11 +32,11 @@ const Social = () => {
       );
     }
   }
-  if (googleLoading || githubLoading) {
+  if (googleLoading || githubLoading || loading) {
     return <Loading />;
   }
-  if (googleUser || githubUser) {
-    console.log(googleUser || githubUser);
+  if (user) {
+    navigate(from, { replace: true });
   }
 
   return (

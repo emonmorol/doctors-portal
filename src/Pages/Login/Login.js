@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../assets/images/login.png";
 import { useForm } from "react-hook-form";
 import Social from "./Social";
@@ -17,10 +17,20 @@ const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  let from = location.state?.from?.pathname || "/";
+
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     signInWithEmailAndPassword(data.email, data.password);
+    if (user) {
+      // console.log(user);
+      navigate(from, { replace: true });
+    }
   };
+
   let errorMessage;
   if (error) {
     errorMessage = (
@@ -29,9 +39,6 @@ const Login = () => {
   }
   if (loading) {
     return <Loading />;
-  }
-  if (user) {
-    console.log(user);
   }
 
   return (
@@ -47,9 +54,9 @@ const Login = () => {
                 Please Login
               </h2>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div class="form-control w-full mb-6">
-                  <label class="label">
-                    <span class="label-text">Email Address</span>
+                <div className="form-control w-full mb-6">
+                  <label className="label">
+                    <span className="label-text">Email Address</span>
                   </label>
                   <input
                     type="email"
@@ -64,25 +71,25 @@ const Login = () => {
                         message: "Provide A Valid Email",
                       },
                     })}
-                    class="input input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
-                  <label class="text-center">
+                  <label className="text-center">
                     {errors.email?.type === "required" && (
-                      <span class="label-text-alt text-red-500">
+                      <span className="label-text-alt text-red-500">
                         {errors.email.message}
                       </span>
                     )}
                     {errors.email?.type === "pattern" && (
-                      <span class="label-text-alt text-red-500">
+                      <span className="label-text-alt text-red-500">
                         {errors.email.message}
                       </span>
                     )}
                   </label>
                 </div>
 
-                <div class="form-control w-full mb-6">
-                  <label class="label">
-                    <span class="label-text">Password</span>
+                <div className="form-control w-full mb-6">
+                  <label className="label">
+                    <span className="label-text">Password</span>
                   </label>
                   <input
                     type="password"
@@ -97,16 +104,16 @@ const Login = () => {
                         message: "Password must be 6 character of longer",
                       },
                     })}
-                    class="input input-bordered w-full"
+                    className="input input-bordered w-full"
                   />
-                  <label class="text-center">
+                  <label className="text-center">
                     {errors.password?.type === "required" && (
-                      <span class="label-text-alt text-red-500">
+                      <span className="label-text-alt text-red-500">
                         {errors.password.message}
                       </span>
                     )}
                     {errors.password?.type === "minLength" && (
-                      <span class="label-text-alt text-red-500">
+                      <span className="label-text-alt text-red-500">
                         {errors.password.message}
                       </span>
                     )}
@@ -136,14 +143,6 @@ const Login = () => {
                   value="Login"
                   className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full mb-6"
                 />
-                {/* <button
-                  type="submit"
-                  className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full mb-6"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                >
-                  Log in
-                </button> */}
 
                 <div className="block lg:hidden text-center">
                   <Link

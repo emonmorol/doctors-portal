@@ -1,14 +1,23 @@
 import axios from "axios";
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import swal from "sweetalert";
+import auth from "../../firebase.init";
+import Loading from "../Shared/Loading";
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots } = treatment;
   // console.log(treatment, slots);
+  const [user, loading] = useAuthState(auth);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const handleBooking = (e) => {
     e.preventDefault();
+
     const slot = e.target.slot.value;
     const patientName = e.target.name.value;
     const email = e.target.email.value;
@@ -55,20 +64,26 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             />
             <select name="slot" className="select select-bordered w-full">
               {slots &&
-                slots.map((slot) => <option value={slot}>{slot}</option>)}
+                slots.map((slot, index) => (
+                  <option key={index} value={slot}>
+                    {slot}
+                  </option>
+                ))}
             </select>
             <input
               required
               type="text"
               name="name"
-              placeholder="Your Name"
+              disabled
+              value={user?.displayName || ""}
               className="input input-bordered w-full"
             />
             <input
               required
               type="email"
               name="email"
-              placeholder="Email Address"
+              disabled
+              value={user?.email || ""}
               className="input input-bordered w-full"
             />
             <input

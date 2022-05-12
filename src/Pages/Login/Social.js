@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import auth from "../../firebase.init";
 import {
   useSignInWithGoogle,
@@ -19,6 +19,12 @@ const Social = () => {
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, from, navigate]);
+
   let firebaseError;
   if (googleError || githubError) {
     if (googleError) {
@@ -34,9 +40,6 @@ const Social = () => {
   }
   if (googleLoading || githubLoading || loading) {
     return <Loading />;
-  }
-  if (user) {
-    navigate(from, { replace: true });
   }
 
   return (

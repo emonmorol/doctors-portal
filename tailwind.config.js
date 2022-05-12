@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/*.{html,js}", "./node_modules/flowbite/**/*.js"],
+  content: ["./node_modules/flowbite/**/*.js", "./src/**/*.{html,js}"],
   theme: {
     extend: {
       backgroundImage: {
@@ -22,8 +22,6 @@ module.exports = {
           "base-100": "#ffffff",
         },
       },
-      "dark",
-      "cupcake",
     ],
   },
   plugins: [require("daisyui"), require("flowbite/plugin")],

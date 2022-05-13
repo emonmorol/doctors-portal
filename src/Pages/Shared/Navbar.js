@@ -26,11 +26,16 @@ const Navbar = () => {
         <NavLink to="/contact">Contact Us</NavLink>
       </li>
       {user ? (
-        <li>
-          <NavLink onClick={() => signOut(auth)} to="/login">
-            Logout
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+          <li>
+            <NavLink onClick={() => signOut(auth)} to="/login">
+              Logout
+            </NavLink>
+          </li>
+        </>
       ) : (
         <>
           <li>
@@ -82,6 +87,14 @@ const Navbar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal p-0">{menuItems}</ul>
+        </div>
+        <div className="navbar-end">
+          <label
+            for="my-drawer-2"
+            class="btn btn-primary drawer-button lg:hidden"
+          >
+            Open drawer
+          </label>
         </div>
       </div>
     </div>

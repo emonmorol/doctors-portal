@@ -4,18 +4,26 @@ import login from "../../assets/images/login.png";
 import { useForm } from "react-hook-form";
 import Social from "./Social";
 import auth from "../../firebase.init";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import Loading from "../Shared/Loading";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    getValues,
   } = useForm();
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,6 +34,22 @@ const Login = () => {
     signInWithEmailAndPassword(data.email, data.password);
     if (user) {
       navigate(from, { replace: true });
+    }
+  };
+
+  const handleResetPass = async (e) => {
+    e.preventDefault();
+
+    const email = getValues("email");
+    if (email) {
+      await sendPasswordResetEmail(email);
+      if (sending) {
+        toast.info("Password Reset Email Is Sending !");
+      } else {
+        toast.success("Password Reset Email Sent !");
+      }
+    } else {
+      toast.warning("Please Input Your Email !");
     }
   };
 
@@ -58,6 +82,7 @@ const Login = () => {
                   </label>
                   <input
                     type="email"
+                    onBlur={handleResetPass}
                     placeholder="Enter Your Email"
                     {...register("email", {
                       required: {
@@ -119,12 +144,12 @@ const Login = () => {
                 </div>
 
                 <div className="flex justify-between items-center mb-6">
-                  <Link
-                    to="/register"
+                  <button
+                    onClick={handleResetPass}
                     className="font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                   >
                     Forgot password?
-                  </Link>
+                  </button>
                   <Link
                     to="/register"
                     className="lg:block hidden font-semibold text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"

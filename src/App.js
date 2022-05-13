@@ -9,6 +9,8 @@ import Register from "./Pages/Login/Register";
 import RequireAuth from "./Pages/Login/RequireAuth";
 import Reviews from "./Pages/Reviews/Reviews";
 import Navbar from "./Pages/Shared/Navbar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -32,6 +34,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </>
   );

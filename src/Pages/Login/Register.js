@@ -6,15 +6,19 @@ import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
 import {
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import Loading from "../Shared/Loading";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
   const [updateProfile, updating, uError] = useUpdateProfile(auth);
+  const [sendEmailVerification, sending, verificationError] =
+    useSendEmailVerification(auth);
 
   const {
     register,
@@ -30,8 +34,12 @@ const Register = () => {
     // console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
+    await sendEmailVerification();
     if (user) {
       navigate(from, { replace: true });
+    }
+    if (!sending && !verificationError) {
+      toast.success("Verification Email Sent !");
     }
   };
 

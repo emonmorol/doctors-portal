@@ -6,8 +6,8 @@ import swal from "sweetalert";
 import auth from "../../firebase.init";
 import Loading from "../Shared/Loading";
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
-  const { name, slots } = treatment;
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
+  const { name, slots, _id } = treatment;
   // console.log(treatment, slots);
   const [user, loading] = useAuthState(auth);
 
@@ -17,29 +17,36 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
 
   const handleBooking = (e) => {
     e.preventDefault();
-
+    const formattedDate = format(date, "PP");
     const slot = e.target.slot.value;
-    const patientName = e.target.name.value;
-    const email = e.target.email.value;
     const phone = e.target.phone.value;
 
     const newBooking = {
-      bookingName: name,
+      treatmentId: _id,
+      treatmentName: name,
+      date: formattedDate,
       slot,
-      patientName,
-      email,
+      patientName: user.displayName,
+      patientEmail: user.email,
       phone,
     };
 
     const url = `http://localhost:5000/bookings`;
     (async () => {
       const { data } = await axios.post(url, newBooking);
-      if (data) {
-        swal("Great!", "You Booking is Complete!", "success");
+      if (data.success) {
+        swal(
+          "Appointed",
+          `Appointment is set ${formattedDate} at ${slot}`,
+          "success"
+        );
       }
+      if (!data.success) {
+        swal("Sorry!", "You've Already Appointed For This Treatment", "error");
+      }
+      refetch();
+      setTreatment(null);
     })();
-
-    setTreatment(null);
   };
 
   return (

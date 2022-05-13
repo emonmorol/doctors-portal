@@ -1,42 +1,46 @@
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { DayPicker } from "react-day-picker";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useQuery } from "react-query";
 import auth from "../../firebase.init";
-import Loading from "../Shared/Loading";
 
 const MyAppointments = () => {
   const [user] = useAuthState(auth);
   const [appointment, setAppointment] = useState([]);
+  const [date, setDate] = useState(new Date());
+  const formattedDate = format(date, "PP");
 
   useEffect(() => {
     console.log(user?.email);
-    const url = `http://localhost:5000/booking?patient=${user?.email}`;
+    const url = `http://localhost:5000/booking?patient=${user?.email}&date=${formattedDate}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setAppointment(data));
-  }, [user]);
+  }, [user, formattedDate]);
   console.log(appointment);
-
-  //   const { isLoading, data, error } = useQuery(
-  //     ["userBookings", user?.email],
-  //     () =>
-  //       fetch(`http://localhost:5000/bookings?email=${user?.email}`).then((res) =>
-  //         res.json()
-  //       )
-  //   );
-
-  //   if (isLoading) {
-  //     return <Loading />;
-  //   }
-
-  //   if (error) {
-  //     return <p>An Error Accured</p>;
-  //   }
-
-  //   console.log(error);
   return (
     <div>
-      <h2>My Appointment {appointment.length}</h2>
+      <div className="flex justify-between items-center my-4">
+        <h2 className="text-base lg:text-2xl font-semibold my-3">
+          My Appointment
+        </h2>
+        <div class="dropdown dropdown-end">
+          <label
+            tabindex="0"
+            class="cursor-pointer bg-gray-50 rounded-lg text-base lg:text-lg border-4 border-gray-400 py-3 px-7  lg:px-12 font-bold m-1 shadow-lg"
+          >
+            {formattedDate}
+          </label>
+          <div
+            tabindex="0"
+            class="dropdown-content card card-compact mt-2 shadow-3xl"
+          >
+            <div className="p-1 lg:p-5 rounded-3xl bg-white border-2 border-gray-20 ">
+              <DayPicker mode="single" selected={date} onSelect={setDate} />
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="overflow-x-auto">
         <table class="table w-full">
           <thead>
@@ -49,9 +53,9 @@ const MyAppointments = () => {
             </tr>
           </thead>
           <tbody>
-            {appointment.map((booking) => (
+            {appointment.map((booking, index) => (
               <tr class="hover" key={booking._id}>
-                <th>1</th>
+                <th>{index + 1}</th>
                 <td>{booking.patientName}</td>
                 <td>{booking.treatmentName}</td>
                 <td>{booking.slot}</td>

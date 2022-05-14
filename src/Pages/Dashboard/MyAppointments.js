@@ -47,28 +47,30 @@ const MyAppointments = () => {
         </div>
       </div>
       <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Treatment</th>
-              <th>Time</th>
-              <th>date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {appointment.map((booking, index) => (
-              <tr class="hover" key={booking._id}>
-                <th>{index + 1}</th>
-                <td>{booking.patientName}</td>
-                <td>{booking.treatmentName}</td>
-                <td>{booking.slot}</td>
-                <td>{booking.date}</td>
+        {appointment !== [] && (
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Treatment</th>
+                <th>Time</th>
+                <th>date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {appointment.map((booking, index) => (
+                <tr class="hover" key={booking._id}>
+                  <th>{index + 1}</th>
+                  <td>{booking.patientName}</td>
+                  <td>{booking.treatmentName}</td>
+                  <td>{booking.slot}</td>
+                  <td>{booking.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

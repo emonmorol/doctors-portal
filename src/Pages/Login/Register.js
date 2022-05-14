@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import registerImage from "../../assets/images/register.png";
 import Social from "./Social";
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSendEmailVerification,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import Loading from "../Shared/Loading";
 import { toast } from "react-toastify";
+import useToken from "../../Hooks/useToken";
 
 const Register = () => {
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, crUser, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
+  const [user] = useAuthState(auth);
+
   const [updateProfile, updating, uError] = useUpdateProfile(auth);
+
   const [sendEmailVerification, sending, verificationError] =
     useSendEmailVerification(auth);
+  const [token] = useToken(user);
 
   const {
     register,
@@ -29,15 +35,18 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let from = location.state?.from?.pathname || "/";
+  useEffect(() => {
+    if (token) {
+      navigate(from, { replace: true });
+    }
+  }, [token, from, navigate]);
 
   const onSubmit = async (data) => {
     // console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
     await sendEmailVerification();
-    if (user) {
-      navigate(from, { replace: true });
-    }
+
     if (!sending && !verificationError) {
       toast.success("Verification Email Sent !");
     }

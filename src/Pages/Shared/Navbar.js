@@ -8,6 +8,11 @@ import Loading from "./Loading";
 const Navbar = () => {
   const [user, loading] = useAuthState(auth);
 
+  const handleSingOut = () => {
+    signOut(auth);
+    localStorage.removeItem("accessToken");
+  };
+
   const menuItems = (
     <>
       <li>
@@ -31,9 +36,7 @@ const Navbar = () => {
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
-            <NavLink onClick={() => signOut(auth)} to="/login">
-              Logout
-            </NavLink>
+            <span onClick={handleSingOut}>Logout</span>
           </li>
         </>
       ) : (

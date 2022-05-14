@@ -18,7 +18,12 @@ const AppointmentBanner = ({ date, setDate }) => {
             You Have Selected{" "}
             <span className="font-bold text-primary">{format(date, "PP")}</span>
           </p>
-          <DayPicker mode="single" selected={date} onSelect={setDate} />
+          <DayPicker
+            required
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+          />
         </div>
       </div>
     </div>

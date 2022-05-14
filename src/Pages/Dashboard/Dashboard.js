@@ -13,7 +13,7 @@ const Dashboard = () => {
       </div>
       <div class="drawer-side">
         <label for="my-drawer-2" class="drawer-overlay"></label>
-        <ul class="menu overflow-y-auto mt-20 w-52 bg-base-100 text-base-content">
+        <ul class="menu overflow-y-auto pt-10 w-52 bg-base-100 text-base-content">
           <li className="text-center">
             <Link to="/dashboard">My Appointment</Link>
           </li>

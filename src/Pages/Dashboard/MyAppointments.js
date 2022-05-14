@@ -36,7 +36,12 @@ const MyAppointments = () => {
             class="dropdown-content card card-compact mt-2 shadow-3xl"
           >
             <div className="p-1 lg:p-5 rounded-3xl bg-white border-2 border-gray-20 ">
-              <DayPicker mode="single" selected={date} onSelect={setDate} />
+              <DayPicker
+                required
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+              />
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user?.email;
     if (email) {
-      fetch(`http://localhost:5000/admin/${email}`, {
+      fetch(`https://powerful-forest-45249.herokuapp.com/admin/${email}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

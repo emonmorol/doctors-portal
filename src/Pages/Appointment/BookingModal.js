@@ -8,7 +8,6 @@ import Loading from "../Shared/Loading";
 
 const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
   const { name, slots, _id } = treatment;
-  // console.log(treatment, slots);
   const [user, loading] = useAuthState(auth);
 
   if (loading) {

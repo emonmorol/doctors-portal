@@ -1,7 +1,9 @@
 import { format } from "date-fns";
+import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const MyAppointments = () => {
@@ -9,15 +11,28 @@ const MyAppointments = () => {
   const [appointment, setAppointment] = useState([]);
   const [date, setDate] = useState(new Date());
   const formattedDate = format(date, "PP");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(user?.email);
     const url = `http://localhost:5000/booking?patient=${user?.email}&date=${formattedDate}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setAppointment(data));
+    fetch(url, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          navigate("/home");
+          signOut(auth);
+          localStorage.removeItem("accessToken");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setAppointment(data);
+      });
   }, [user, formattedDate]);
-  console.log(appointment);
   return (
     <div>
       <div className="flex justify-between items-center my-4">
@@ -51,7 +66,7 @@ const MyAppointments = () => {
           <table class="table w-full">
             <thead>
               <tr>
-                <th></th>
+                <th>SL</th>
                 <th>Name</th>
                 <th>Treatment</th>
                 <th>Time</th>
@@ -59,7 +74,7 @@ const MyAppointments = () => {
               </tr>
             </thead>
             <tbody>
-              {appointment.map((booking, index) => (
+              {appointment?.map((booking, index) => (
                 <tr class="hover" key={booking._id}>
                   <th>{index + 1}</th>
                   <td>{booking.patientName}</td>
@@ -70,6 +85,11 @@ const MyAppointments = () => {
               ))}
             </tbody>
           </table>
+        )}
+        {appointment === [] && (
+          <p className="text-3xl text-center uppercase text-primary">
+            You Dont Have Any Appointment That Day{" "}
+          </p>
         )}
       </div>
     </div>

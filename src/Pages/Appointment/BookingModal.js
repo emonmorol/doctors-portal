@@ -30,7 +30,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
       phone,
     };
 
-    const url = `https://powerful-forest-45249.herokuapp.com/bookings`;
+    const url = `http://localhost:5000/bookings`;
     (async () => {
       const { data } = await axios.post(url, newBooking);
       if (data.success) {

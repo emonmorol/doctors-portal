@@ -7,7 +7,7 @@ const useToken = (user) => {
     const email = user?.email;
     const currentUser = { email: email };
     if (email) {
-      fetch(`https://powerful-forest-45249.herokuapp.com/user/${email}`, {
+      fetch(`http://localhost:5000/user/${email}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

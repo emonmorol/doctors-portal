@@ -14,7 +14,7 @@ const MyAppointments = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = `https://powerful-forest-45249.herokuapp.com/booking?patient=${user?.email}&date=${formattedDate}`;
+    const url = `http://localhost:5000/booking?patient=${user?.email}&date=${formattedDate}`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -32,7 +32,7 @@ const MyAppointments = () => {
       .then((data) => {
         setAppointment(data);
       });
-  }, [user, formattedDate]);
+  }, [user, formattedDate, navigate]);
   return (
     <div>
       <div className="flex justify-between items-center my-4">

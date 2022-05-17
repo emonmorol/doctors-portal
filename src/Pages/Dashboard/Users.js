@@ -9,7 +9,7 @@ const Users = () => {
     isLoading,
     refetch,
   } = useQuery("users", () =>
-    fetch("https://powerful-forest-45249.herokuapp.com/user", {
+    fetch("http://localhost:5000/user", {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -19,7 +19,6 @@ const Users = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(users);
 
   return (
     <div>
@@ -32,7 +31,6 @@ const Users = () => {
             <th>Email</th>
             <th>Make Admin</th>
             <th>Remove User</th>
-            {/* <th>date</th> */}
           </tr>
         </thead>
         <tbody>

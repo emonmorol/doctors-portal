@@ -33,7 +33,7 @@ const AddDoctor = () => {
    */
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     const avatar = data.image[0];
     const formData = new FormData();
     await formData.append("image", avatar);

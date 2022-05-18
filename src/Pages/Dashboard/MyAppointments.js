@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const MyAppointments = () => {
@@ -71,6 +71,7 @@ const MyAppointments = () => {
                 <th>Treatment</th>
                 <th>Time</th>
                 <th>date</th>
+                <th>Payment</th>
               </tr>
             </thead>
             <tbody>
@@ -81,6 +82,19 @@ const MyAppointments = () => {
                   <td>{booking.treatmentName}</td>
                   <td>{booking.slot}</td>
                   <td>{booking.date}</td>
+                  <td>
+                    {booking.price && !booking.paid && (
+                      <Link
+                        to={`/dashboard/payment/${booking._id}`}
+                        className="btn btn-xs"
+                      >
+                        Pay
+                      </Link>
+                    )}
+                    {booking.price && booking.paid && (
+                      <button className="btn btn-xs btn-success">Paid</button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -6,7 +6,7 @@ import DoctorRow from "./DoctorRow";
 
 const ManageDoctors = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
-  console.log(deletingDoctor);
+  // console.log(deletingDoctor);
   const {
     data: doctors,
     isLoading,
